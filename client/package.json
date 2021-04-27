@@ -1,0 +1,19 @@
+{
+  "name": "m-wallet-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/scripts/main.js",
+  "scripts": {
+    "start": "webpack --watch",
+    "dev": "webpack serve --open",
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.36.0",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
