@@ -1,11 +1,12 @@
 const path = require('path');
+const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin'); 
-const webpack = require('webpack'); 
-
+const appDirectory = fs.realpathSync(process.cwd());
+const resolveAppPath = relativePath => path.resolve(appDirectory, relativePath);
 module.exports = {
 
     entry: {
-      main: './src/scripts/main.ts',
+      main: path.resolve(__dirname, "src", "main.ts")
     },
     output: {
       filename: '[name].bundle.js',
@@ -15,14 +16,13 @@ module.exports = {
     module: {
       rules: [
         {
-          test: /\.css$/i,
-          use: ['style-loader', 'css-loader'],
-  
-        },
-        {
           test: /\.tsx?$/,
           use: 'ts-loader',
           exclude: /node_modules/,
+        },
+        {
+          test: /\.css$/i,
+          use: ['style-loader', 'css-loader'],
         },
       ],
     },
@@ -30,10 +30,14 @@ module.exports = {
       extensions: ['.tsx', '.ts', '.js'],
     },
     plugins: [
-      new HtmlWebpackPlugin({template: "./public/index.html"})
+      new HtmlWebpackPlugin({
+        inject: true,
+        template: path.resolve(__dirname, "public", "index.html")})
     ],
     devtool: 'inline-source-map',
     devServer: {
-        contentBase: './public/index.html',
+        contentBase: resolveAppPath("public"),
+        compress: true,
+        hot: true
       },
   };

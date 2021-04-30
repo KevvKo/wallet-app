@@ -1,12 +1,18 @@
 {
     "compilerOptions": {
-      "outDir": "./dist/",
-      "sourceMap": true,
-      "noImplicitAny": true,
-      "module": "es6",
-      "target": "es5",
-      "jsx": "react",
-      "allowJs": true,
-      "moduleResolution": "node",
-    }
+        "outDir": "./dist/",
+        "noImplicitAny": true,
+        "target": "es2019",
+        "module": "es2020",
+        "jsx": "react",
+        "allowJs": true,
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "plugins": [
+            {
+              "name": "ts-lit-plugin",
+              "strict": true
+            }
+        ]
+    },
   }
