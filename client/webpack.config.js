@@ -36,8 +36,15 @@ module.exports = {
     ],
     devtool: 'inline-source-map',
     devServer: {
-        contentBase: resolveAppPath("public"),
+        contentBase: [
+          path.join(__dirname, 'public'),
+          path.join(__dirname, 'src'),
+        ],  
         compress: true,
-        hot: true
+        hot: false,
+        watchContentBase: true,
+        watchOptions: {
+          poll: true,
+        },
       },
   };

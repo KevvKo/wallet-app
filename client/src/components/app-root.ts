@@ -7,6 +7,8 @@ import './app-footer'
 export class AppRoot extends LitElement {
 
   static styles = css`
+    @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300;1,400&display=swap');
+    
     :host{
       --primary-color:    #305ddb;
       --secondary-color:  #7794e5;
@@ -23,14 +25,15 @@ export class AppRoot extends LitElement {
       --grey-scale-2:     #b7b5b5;
       --grey-scale-3:     #999999;
     }
-
-    body{
-      height: 100%;
-    }
     #root{
+      font-family: 'Work Sans', sans-serif;
       width: 100%;
       height: 100%;
     }
+    body{
+      height: 100%;
+    }
+
   `
   render() {
     return html`
