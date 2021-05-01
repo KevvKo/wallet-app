@@ -5,13 +5,19 @@ import { customElement } from 'lit/decorators.js';
 export class AppFooter extends LitElement {
 
     static styles = css`
+      :host{
+        height: max-content;
+        margin-top: auto;
+      }
       footer{
-        height: 40px;
+        font-weight: var(--font-weight-regular);
+        padding: 10px;
+        display: block;
         width: 100%;
         margin-top: auto;
       }
       a{
-        color: var(--accent-color);
+        color: var(--primary-color);
         text-decoration: none;
       }
     `;

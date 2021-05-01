@@ -10,7 +10,7 @@ export class AppRoot extends LitElement {
     @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300;1,400&display=swap');
     
     :host{
-      --primary-color:    #305ddb;
+      --primary-color:    #2236e8;
       --secondary-color:  #7794e5;
       --accent-color:     #61a7d3;
 
@@ -24,11 +24,14 @@ export class AppRoot extends LitElement {
       --grey-scale-1:     #cecece;
       --grey-scale-2:     #b7b5b5;
       --grey-scale-3:     #999999;
+
+      --font-weight-regular: 500;
     }
     #root{
       font-family: 'Work Sans', sans-serif;
       width: 100%;
       height: 100%;
+      display: flex;
     }
     body{
       height: 100%;
