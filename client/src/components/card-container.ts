@@ -5,6 +5,9 @@ import { customElement } from 'lit/decorators.js';
 export class CardContainer extends LitElement {
 
   render() {
-    return html`<div id="card-container"></div>`;
+    return html`
+    <div id="card-container">
+      <slot></slot>
+    </div>`;
   }
 }
