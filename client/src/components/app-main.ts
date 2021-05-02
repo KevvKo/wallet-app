@@ -10,6 +10,8 @@ export class AppMain extends LitElement {
   #app-main{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     height: 100%;
   }
   `;
@@ -17,20 +19,18 @@ export class AppMain extends LitElement {
     return html`
     <div id="app-main">
         <account-balance></account-balance>
-        <card-container>
-          <token-balance
-            tokenName="Bitcoin"
-            tokenId="BTC"
-            tokenBalance="34"
-          ></token-balance>
-        </card-container>   
-        <card-container>
-          <token-balance
-          tokenName="Ethereum"
-          tokenId="ETH"
-          tokenBalance="423"
-          ></token-balance>
-        </card-container>   
+        <token-balance
+          tokenName="Bitcoin"
+          tokenId="BTC"
+          tokenBalance="34"
+          tokenVolume="10"
+        ></token-balance>
+        <token-balance
+        tokenName="Ethereum"
+        tokenId="ETH"
+        tokenBalance="423"
+        tokenVolume="43"
+        ></token-balance>
     </div>`;
   }
 }

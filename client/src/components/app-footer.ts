@@ -15,7 +15,7 @@ export class AppFooter extends LitElement {
         margin-top: auto;
       }
       a{
-        color: var(--primary-color);
+        color: var(--font-color);
         text-decoration: none;
       }`;
     render() {

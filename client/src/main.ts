@@ -5,5 +5,4 @@ import './components/app-header';
 import './components/app-main';
 import './components/app-footer';
 import './components/account-balance';
-import './components/card-container';
 import './components/token-balance';

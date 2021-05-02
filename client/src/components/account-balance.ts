@@ -5,11 +5,20 @@ import { customElement } from 'lit/decorators.js';
 export class AccountBalance extends LitElement {
     static styles = css`
 
+    :host{
+        width: 80%;
+    }
+    #account-balance{
+        background: var(--white);
+        border-radius: 3px;
+        color: var(--font-color);
+        padding: var(--spacer);
+    }
     `;
     render() {
         return html`
         <div id="account-balance">
-            <h2>Balance</h2>
+            <h3>Balance</h3>
         </div>`;
     }
 }
