@@ -18,10 +18,10 @@ export class AppRoot extends LitElement {
       --danger-color:     #ead117
       --warning-color:    #c91414;
 
-      --white:            #efefef;            
+      --white:            #f7f7ff;            
       --black:            #262121; 
 
-      --grey-scale-1:     #e5e6ff;
+      --grey-scale-1:     #e5e5e5;
       --grey-scale-2:     #b7b5b5;
       --grey-scale-3:     #545454;
 
@@ -29,9 +29,11 @@ export class AppRoot extends LitElement {
       --font-color: var(--grey-scale-3);
       
       --spacer: 13px;
+
+      --border-style: 1px solid var(--grey-scale-2);
     }
     #root{
-      background: var(--grey-scale-1);
+      background: var(--white);
       font-family: 'Work Sans', sans-serif;
       width: 100%;
       height: 100%;

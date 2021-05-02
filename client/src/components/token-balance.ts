@@ -6,7 +6,6 @@ export class TokenBalance extends LitElement {
   static styles = css`
     :host{
       width: 80%;
-      background: var(--white)
     }
     #token-balance{
       display:flex;

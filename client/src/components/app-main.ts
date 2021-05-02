@@ -6,13 +6,18 @@ export class AppMain extends LitElement {
   static styles = css `
   :host{
     flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   #app-main{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    width: 80%;
+    border: var(--border-style);
+    border-radius: 3px;
   }
   `;
   render() {

@@ -9,16 +9,24 @@ export class AccountBalance extends LitElement {
         width: 80%;
     }
     #account-balance{
-        background: var(--white);
-        border-radius: 3px;
+        display: flex;
         color: var(--font-color);
         padding: var(--spacer);
+    }
+    h3{
+        margin: 0;
+        line-height: 17px;
+        color: var(--primary-color);
+    }
+    h3 + div{
+        margin-left: 15px;
     }
     `;
     render() {
         return html`
         <div id="account-balance">
-            <h3>Balance</h3>
+            <h3>Account:</h3>
+            <div>0x3868E57fbd4a5EF4459Bd2045028748F88641474</div>
         </div>`;
     }
 }
