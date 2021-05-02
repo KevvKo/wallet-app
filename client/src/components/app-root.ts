@@ -21,13 +21,14 @@ export class AppRoot extends LitElement {
       --white:            #efefef;            
       --black:            #262121; 
 
-      --grey-scale-1:     #cecece;
+      --grey-scale-1:     #ededff;
       --grey-scale-2:     #b7b5b5;
       --grey-scale-3:     #999999;
 
       --font-weight-regular: 500;
     }
     #root{
+      background: var(--grey-scale-1);
       font-family: 'Work Sans', sans-serif;
       width: 100%;
       height: 100%;

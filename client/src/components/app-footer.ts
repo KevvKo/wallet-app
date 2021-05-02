@@ -8,19 +8,16 @@ export class AppFooter extends LitElement {
       :host{
         height: max-content;
         margin-top: auto;
+        padding: 5px;
       }
       footer{
         font-weight: var(--font-weight-regular);
-        padding: 10px;
-        display: block;
-        width: 100%;
         margin-top: auto;
       }
       a{
         color: var(--primary-color);
         text-decoration: none;
-      }
-    `;
+      }`;
     render() {
     return html`
     <footer>
