@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/KevvKo/wallet-app#readme",
   "dependencies": {
+    "@openzeppelin/contracts": "^4.1.0",
     "@truffle/hdwallet-provider": "^1.3.0",
     "dotenv": "^8.2.0"
   }
