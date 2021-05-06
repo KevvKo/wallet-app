@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "deploy:dev": "truffle migrate --network development",
+    "deploy:dev": "truffle migrate --network development --reset",
+    "deploy": "truffle migrate --network kovan --reset",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
