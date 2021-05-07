@@ -1,8 +1,7 @@
+const webpack = require('webpack')
 const path = require('path');
-const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin'); 
-const appDirectory = fs.realpathSync(process.cwd());
-const resolveAppPath = relativePath => path.resolve(appDirectory, relativePath);
+
 module.exports = {
 
     entry: {
@@ -32,7 +31,11 @@ module.exports = {
     plugins: [
       new HtmlWebpackPlugin({
         inject: true,
-        template: path.resolve(__dirname, "public", "index.html")})
+        template: path.resolve(__dirname, "public", "index.html")
+      }),
+      new webpack.ProvidePlugin({
+        process: 'process/browser',
+      }),
     ],
     devtool: 'inline-source-map',
     devServer: {
@@ -47,4 +50,7 @@ module.exports = {
           poll: true,
         },
       },
+      // node: {
+      //   process: true
+      // }
   };
