@@ -1,14 +1,14 @@
 import { LitElement, html, css } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-@customElement('account-balance')
-export class AccountBalance extends LitElement {
+@customElement('account-info')
+export class AccountInfo extends LitElement {
     static styles = css`
 
     :host{
         width: 80%;
     }
-    #account-balance{
+    #account-info{
         display: flex;
         color: var(--font-color);
         padding: var(--spacer);
@@ -24,7 +24,7 @@ export class AccountBalance extends LitElement {
     `;
     render() {
         return html`
-        <div id="account-balance">
+        <div id="account-info">
             <h3>Account:</h3>
             <div>0x3868E57fbd4a5EF4459Bd2045028748F88641474</div>
         </div>`;

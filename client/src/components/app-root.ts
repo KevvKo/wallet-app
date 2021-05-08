@@ -26,8 +26,8 @@ export class AppRoot extends LitElement {
       --grey-scale-3:     #545454;
 
       --font-weight-regular: 500;
-      --font-color: var(--grey-scale-3);
-      
+      --font-color-default: var(--grey-scale-3);
+      --font-color-light: var(--grey-scale-1);
       --spacer: 13px;
 
       --border-style: 1px solid var(--grey-scale-2);
@@ -47,6 +47,7 @@ export class AppRoot extends LitElement {
   `
   render() {
     return html`
+    
       <div id="root">
         <app-header></app-header>
         <app-main></app-main>

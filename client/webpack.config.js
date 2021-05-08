@@ -9,8 +9,8 @@ module.exports = {
     },
     output: {
       filename: '[name].bundle.js',
-      path: path.resolve(__dirname, 'public'),
-      publicPath: "/dist",
+      path: path.resolve(__dirname, '/  dist'),
+      publicPath: "/dist/",
       clean: true
     },
     module: {
@@ -23,6 +23,10 @@ module.exports = {
         {
           test: /\.css$/i,
           use: ['style-loader', 'css-loader'],
+        },
+        {
+          test: /\.(png|svg|jpg|jpeg|gif)$/i,
+          type: 'asset/resource',
         },
       ],
     },
