@@ -9,7 +9,8 @@ module.exports = {
     },
     output: {
       filename: '[name].bundle.js',
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, 'public'),
+      publicPath: "/dist",
       clean: true
     },
     module: {
@@ -44,13 +45,6 @@ module.exports = {
           path.join(__dirname, 'src'),
         ],  
         compress: true,
-        hot: false,
-        watchContentBase: true,
-        watchOptions: {
-          poll: true,
-        },
-      },
-      // node: {
-      //   process: true
-      // }
+        hot: false
+      }
   };
