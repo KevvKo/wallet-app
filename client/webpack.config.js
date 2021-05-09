@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin'); 
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 module.exports = {
 
@@ -32,6 +33,9 @@ module.exports = {
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
+      fallback: {
+        "http": require.resolve("stream-http")
+      }
     },
     plugins: [
       new HtmlWebpackPlugin({
@@ -41,6 +45,7 @@ module.exports = {
       new webpack.ProvidePlugin({
         process: 'process/browser',
       }),
+      new NodePolyfillPlugin()
     ],
     devtool: 'inline-source-map',
     devServer: {
