@@ -7,6 +7,7 @@ export class AccountInfo extends LitElement {
 
     :host{
         width: 80%;
+        display: block;
     }
     #account-info{
         display: flex;
@@ -20,6 +21,7 @@ export class AccountInfo extends LitElement {
     }
     h3 + div{
         margin-left: 15px;
+        overflow: auto;
     }
     `;
     render() {

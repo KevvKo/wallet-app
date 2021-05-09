@@ -21,9 +21,9 @@ export class AppMain extends LitElement {
   }
   #app-main > div:first-child{
     display: flex;
+    flex-wrap: wrap;
     width: 80%;
     align-items: center;
-    margin-bottom: 15px;
   }
   #transaction-buttons{
     margin-left: auto;
@@ -37,7 +37,7 @@ export class AppMain extends LitElement {
     color: var(--font-color-light);
     border: none;
     padding: 12px;
-    margin: 0 5px;
+    margin: 5px;
     text-align: center;
     text-decoration: none;
     border-radius: 50%;
@@ -46,6 +46,11 @@ export class AppMain extends LitElement {
     cursor: pointer;
     filter: brightness(80%);
     transition: 0.2s;
+  }
+  @media only screen and (max-width: 950px){
+    #transaction-buttons{
+      margin: auto;
+    }
   }
   `;
   render() {
