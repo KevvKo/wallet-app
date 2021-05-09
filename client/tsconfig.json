@@ -8,6 +8,8 @@
         "allowJs": true,
         "moduleResolution": "node",
         "experimentalDecorators": true,
+        "allowSyntheticDefaultImports" : true,
+        "esModuleInterop" : true,
         "plugins": [
             {
               "name": "ts-lit-plugin",

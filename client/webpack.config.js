@@ -5,11 +5,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
 
     entry: {
-      main: path.resolve(__dirname, "src", "main.ts")
+      main: "./src/main.ts"
     },
     output: {
       filename: '[name].bundle.js',
-      path: path.resolve(__dirname, '/  dist'),
+      path: path.resolve(__dirname, 'dist'),
       publicPath: "/dist/",
       clean: true
     },
