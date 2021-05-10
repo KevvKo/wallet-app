@@ -47,7 +47,6 @@ export class AppRoot extends LitElement {
   `
   render() {
     return html`
-    
       <div id="root">
         <app-header></app-header>
         <app-main></app-main>

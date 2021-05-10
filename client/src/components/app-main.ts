@@ -1,7 +1,18 @@
 import { LitElement, html, css } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, state } from 'lit/decorators.js';
+import Web3 from 'web3'
+
+// declaration as any to work with window.ethereum in typescript
+declare let window: any; 
+declare let web3: Web3;
 @customElement('app-main')
 export class AppMain extends LitElement {
+
+  connectedCallback(){
+    super.connectedCallback();    if(window.ethereum){
+      web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
+    }
+  }
 
   static styles = css `
   :host{
@@ -51,8 +62,8 @@ export class AppMain extends LitElement {
     #transaction-buttons{
       margin: auto;
     }
-  }
-  `;
+  }`;
+
   render() {
     return html`
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
