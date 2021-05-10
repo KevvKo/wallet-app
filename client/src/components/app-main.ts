@@ -7,11 +7,13 @@ declare let window: any;
 declare let web3: Web3;
 @customElement('app-main')
 export class AppMain extends LitElement {
+  
+  @state()
+  private walletAddress = '0x2e0299Fcf9cFDfb2Ff9dc90ED0853683f620d7fE';
 
   connectedCallback(){
-    super.connectedCallback();    if(window.ethereum){
-      web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
-    }
+    super.connectedCallback();   
+    this._getBalance();
   }
 
   static styles = css `
@@ -68,35 +70,60 @@ export class AppMain extends LitElement {
     return html`
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <div id="app-main">
-      <div>
-        <account-info></account-info>
-        <div id="transaction-buttons">
-          <button>
-            <span class="material-icons">
-              vertical_align_bottom
-            </span>
-          </button>
-          <button>
-            <span class="material-icons">
-              call_made
-            </span>    
-          </button>
+    ${this._checkForEthereum()
+      ? html`
+        <div>
+          <account-info></account-info>
+          <div id="transaction-buttons">
+            <button>
+              <span class="material-icons">
+                vertical_align_bottom
+              </span>
+            </button>
+            <button>
+              <span class="material-icons">
+                call_made
+              </span>    
+            </button>
+          </div>
         </div>
-      </div>
-      <div id="balance">
-        <token-balance
-          tokenName="Bitcoin"
-          tokenId="BTC"
-          tokenBalance="34"
-          tokenVolume="10"
-        ></token-balance>
-        <token-balance
-          tokenName="Ethereum"
-          tokenId="ETH"
-          tokenBalance="423"
-          tokenVolume="43"
-        ></token-balance>
-      </div>
-    </div>`;
+        <div id="balance">
+          <token-balance
+            tokenName="Bitcoin"
+            tokenId="BTC"
+            tokenBalance="34"
+            tokenVolume="10"
+          ></token-balance>
+          <token-balance
+            tokenName="Ethereum"
+            tokenId="ETH"
+            tokenBalance="423"
+            tokenVolume="43"
+          ></token-balance>
+        </div>`
+      : html`
+        <div>
+          No wallet-provider available. Please do ensure, that metamask is available!
+        </div>`
+      }     
+      </div>`;
+    }
+
+    private _send(){
+
+    }
+
+    private _getBalance(){
+    }
+
+    private async _checkForEthereum(){
+      if(window.ethereum){
+
+        await window.ethereum.send('eth_requestAccounts');
+        window.ethereum.request({ method: 'eth_requestAccounts' });
+        return true;
+      }
+
+      return false;
+    }
   }
-}
