@@ -5,15 +5,18 @@ import Web3 from 'web3'
 // declaration as any to work with window.ethereum in typescript
 declare let window: any; 
 declare let web3: Web3;
+declare let Integer: any;
 @customElement('app-main')
 export class AppMain extends LitElement {
   
   @state()
-  private walletAddress = '0x2e0299Fcf9cFDfb2Ff9dc90ED0853683f620d7fE';
+  private _walletAddress = '0x2e0299Fcf9cFDfb2Ff9dc90ED0853683f620d7fE';
+  @state()
+  private _balance: any;
 
   connectedCallback(){
     super.connectedCallback();   
-    this._getBalance();
+    this._balance = this._getBalance()
   }
 
   static styles = css `
@@ -113,17 +116,33 @@ export class AppMain extends LitElement {
 
     }
 
-    private _getBalance(){
+    private async _getBalance(){
+
+      const params = [
+        this._walletAddress,
+        'latest'
+      ]
+
+     const response = await window.ethereum.request({ 
+        method: 'eth_getBalance',
+        params: params
+      })
+      const wei = await this._encodeQuantityToEther(response);
+      return wei/10000000      
     }
 
-    private async _checkForEthereum(){
+    private _checkForEthereum(){
       if(window.ethereum){
-
-        await window.ethereum.send('eth_requestAccounts');
+        window.ethereum.send('eth_requestAccounts');
         window.ethereum.request({ method: 'eth_requestAccounts' });
         return true;
       }
 
       return false;
+    }
+
+    private async _encodeQuantityToEther(quantity: string){
+      if (quantity.length < 1) return 0
+      return parseInt(quantity);
     }
   }
