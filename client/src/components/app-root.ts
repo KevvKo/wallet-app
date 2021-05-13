@@ -25,6 +25,7 @@ export class AppRoot extends LitElement {
       --grey-scale-2:     #b7b5b5;
       --grey-scale-3:     #545454;
 
+      // Fonts
       --font-weight-regular: 500;
       --font-color-default: var(--grey-scale-3);
       --font-color-light: var(--grey-scale-1);

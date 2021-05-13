@@ -1,8 +1,12 @@
 import { LitElement, html, css } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 
 @customElement('account-info')
 export class AccountInfo extends LitElement {
+
+    @property()
+    address: string;
+
     static styles = css`
 
     :host{
@@ -28,7 +32,7 @@ export class AccountInfo extends LitElement {
         return html`
         <div id="account-info">
             <h3>Account:</h3>
-            <div>0x3868E57fbd4a5EF4459Bd2045028748F88641474</div>
+            <div>${this.address}</div>
         </div>`;
     }
 }

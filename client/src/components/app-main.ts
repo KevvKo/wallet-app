@@ -16,7 +16,9 @@ export class AppMain extends LitElement {
 
   connectedCallback(){
     super.connectedCallback();   
-    this._balance = this._getBalance()
+    this._getBalance().then( (value)=> {
+      this._balance = value
+    })
   }
 
   static styles = css `
@@ -76,7 +78,7 @@ export class AppMain extends LitElement {
     ${this._checkForEthereum()
       ? html`
         <div>
-          <account-info></account-info>
+          <account-info address="${this._walletAddress}"></account-info>
           <div id="transaction-buttons">
             <button>
               <span class="material-icons">
@@ -92,16 +94,9 @@ export class AppMain extends LitElement {
         </div>
         <div id="balance">
           <token-balance
-            tokenName="Bitcoin"
-            tokenId="BTC"
-            tokenBalance="34"
-            tokenVolume="10"
-          ></token-balance>
-          <token-balance
-            tokenName="Ethereum"
+            tokenName="Ether"
             tokenId="ETH"
-            tokenBalance="423"
-            tokenVolume="43"
+            tokenBalance="${this._balance}"
           ></token-balance>
         </div>`
       : html`
@@ -128,7 +123,7 @@ export class AppMain extends LitElement {
         params: params
       })
       const wei = await this._encodeQuantityToEther(response);
-      return wei/10000000      
+      return wei/1000000000000000000;      
     }
 
     private _checkForEthereum(){

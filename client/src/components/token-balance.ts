@@ -15,6 +15,7 @@ export class TokenBalance extends LitElement {
     }
     div:not(#token-balance){
       flex-grow: 1;
+      text-align: center;
     }`;
 
     @property()
@@ -23,15 +24,12 @@ export class TokenBalance extends LitElement {
     tokenId: string;
     @property()
     tokenBalance: number;
-    @property()
-    tokenVolume: number
 
   render() {
     return html`
     <div id="token-balance">
         <div>${this.tokenId}</div>
         <div>${this.tokenBalance}</div>
-        <div>${this.tokenVolume}%</div>
     </div>`;
   }
 }
