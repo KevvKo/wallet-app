@@ -16,7 +16,7 @@ export class AccountInfo extends LitElement {
     #account-info{
         display: flex;
         color: var(--font-color);
-        padding: var(--spacer);
+        padding: var(--spacer) 0;
     }
     h3{
         margin: 0;

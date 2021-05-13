@@ -6,3 +6,4 @@ import './components/app-main';
 import './components/app-footer';
 import './components/account-info';
 import './components/token-balance';
+import './components/send-section';

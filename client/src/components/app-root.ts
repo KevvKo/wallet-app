@@ -31,7 +31,9 @@ export class AppRoot extends LitElement {
       --font-color-light: var(--grey-scale-1);
       --spacer: 13px;
 
+      // Borders
       --border-style: 1px solid var(--grey-scale-2);
+      --border-radius: 3px;
     }
     #root{
       background: var(--white);

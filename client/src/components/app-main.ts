@@ -13,11 +13,13 @@ export class AppMain extends LitElement {
   private _walletAddress = '0x2e0299Fcf9cFDfb2Ff9dc90ED0853683f620d7fE';
   @state()
   private _balance: any;
+  @state()
+  private _sendSectionIsVisible = false;
 
   connectedCallback(){
     super.connectedCallback();   
     this._getBalance().then( (value)=> {
-      this._balance = value
+      this._balance = value;
     })
   }
 
@@ -46,9 +48,15 @@ export class AppMain extends LitElement {
   #transaction-buttons{
     margin-left: auto;
   }
+
+  #transaction-buttons button:first-child a{
+    text-decoration: none;
+    color: inherit;
+  }
+
   #balance{
     border: var(--border-style);
-    border-radius: 3px;
+    border-radius: var(--border-radius);
   }
   button{
     background: var(--primary-color);
@@ -81,17 +89,23 @@ export class AppMain extends LitElement {
           <account-info address="${this._walletAddress}"></account-info>
           <div id="transaction-buttons">
             <button>
-              <span class="material-icons">
-                vertical_align_bottom
-              </span>
+              <a 
+                href="https://faucet.kovan.network/"
+                target="_blank"
+              >
+                <span class="material-icons">
+                  vertical_align_bottom
+                </span>
+              </a>
             </button>
-            <button>
+            <button @click="${this._toggleSendSectionVisibility}">
               <span class="material-icons">
                 call_made
               </span>    
             </button>
           </div>
         </div>
+        ${this._getSendSection()}
         <div id="balance">
           <token-balance
             tokenName="Ether"
@@ -107,8 +121,17 @@ export class AppMain extends LitElement {
       </div>`;
     }
 
-    private _send(){
+    private _toggleSendSectionVisibility(){
+      this._sendSectionIsVisible = !this._sendSectionIsVisible;
+    }
 
+    private _getSendSection(){
+      let renderValue;
+
+      this._sendSectionIsVisible 
+        ? renderValue = html`<send-section></send-section>`
+        : renderValue = html``
+      return renderValue
     }
 
     private async _getBalance(){
