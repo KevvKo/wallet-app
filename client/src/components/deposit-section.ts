@@ -2,8 +2,8 @@ import { LitElement, html, css } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 
 declare let window: any; 
-@customElement('send-section')
-export class SendSection extends LitElement {
+@customElement('deposit-section')
+export class DepositSection extends LitElement {
     
     @state()
     recipientAddress = ''
@@ -80,7 +80,7 @@ export class SendSection extends LitElement {
                 value="${this.gasLimit}" 
                 @change="${(e) => {this.gasLimit = e.target.value}}"
             >
-            <button @click="${this._sendTransaction}">send</button>
+            <button @click="${this._deposit}">send</button>
         </div>
         ${ this.invalid 
             ?  html`<div class="error-validation">Please enter a valid address</div>`
@@ -88,7 +88,7 @@ export class SendSection extends LitElement {
         }`;
     }
 
-    private async _sendTransaction(){
+    private async _deposit(){
 
         if(!this.recipientAddress) {
             this.invalid = true

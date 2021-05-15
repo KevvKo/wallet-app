@@ -14,7 +14,7 @@ export class AppMain extends LitElement {
   @state()
   private _balance: any;
   @state()
-  private _sendSectionIsVisible = false;
+  private _depositSectionIsVisible = false;
 
   connectedCallback(){
     super.connectedCallback();   
@@ -98,14 +98,14 @@ export class AppMain extends LitElement {
                 </span>
               </a>
             </button>
-            <button @click="${this._toggleSendSectionVisibility}">
+            <button @click="${this._toggleDepositSectionVisibility}">
               <span class="material-icons">
                 call_made
               </span>    
             </button>
           </div>
         </div>
-        ${this._getSendSection()}
+        ${this._getDepositSection()}
         <div id="balance">
           <token-balance
             tokenName="Ether"
@@ -121,15 +121,15 @@ export class AppMain extends LitElement {
       </div>`;
     }
 
-    private _toggleSendSectionVisibility(){
-      this._sendSectionIsVisible = !this._sendSectionIsVisible;
+    private _toggleDepositSectionVisibility(){
+      this._depositSectionIsVisible = !this._depositSectionIsVisible;
     }
 
-    private _getSendSection(){
+    private _getDepositSection(){
       let renderValue;
 
-      this._sendSectionIsVisible 
-        ? renderValue = html`<send-section></send-section>`
+      this._depositSectionIsVisible 
+        ? renderValue = html`<deposit-section></-section>`
         : renderValue = html``
       return renderValue
     }
