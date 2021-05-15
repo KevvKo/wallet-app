@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import BigNumber from 'bignumber.js';
 
 declare let window: any; 
 @customElement('deposit-section')
@@ -81,6 +82,22 @@ export class DepositSection extends LitElement {
         }`;
     }
 
+    integerToWei(ether: number){
+        return ether * 10**18;
+    }
+
+    integerToGWei(ether: number){
+        return ether * 10**9;
+    }
+
+    toHex(integer: number){
+        return integer.toString(16);
+    }
+
+    getQuantity(value: number){
+        return '0x' + this.toHex(value);
+    }
+
     private async _deposit(){
 
         if(!this._recipientAddress) {
@@ -88,12 +105,16 @@ export class DepositSection extends LitElement {
             return
         }
 
+        const value    = this.getQuantity(this.integerToWei(this.ether));
+        const gasPrice = this.getQuantity(this.integerToGWei(this.gasPrice));
+        const gasLimit = this.getQuantity(this.gasLimit)
+
         const params = [{
             "from": window.ethereum.selectedAddress,
             "to": this._recipientAddress,
-            "gas": "0x" + this.gasLimit.toString(16), 
-            "gasPrice": "0x" + this.gasPrice.toString(16),
-            "value": "0x" + this.ether.toString(16),
+            "gas": gasLimit, 
+            "gasPrice": gasPrice, 
+            "value": value 
         }]      
 
         window.ethereum.request({
