@@ -15,8 +15,8 @@ export class AppRoot extends LitElement {
       --accent-color:     #61a7d3;
 
       --success-color:    #24991e;
-      --danger-color:     #ead117
-      --warning-color:    #c91414;
+      --warning-color:     #ead117;
+      --danger-color:    #c91414;
 
       --white:            #f7f7ff;            
       --black:            #262121; 

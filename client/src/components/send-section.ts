@@ -13,6 +13,8 @@ export class SendSection extends LitElement {
     gasPrice = 3;
     @state()
     gasLimit = 21000;
+    @state()
+    invalid = false;
 
     static styles = css`
     :host{
@@ -41,47 +43,60 @@ export class SendSection extends LitElement {
         cursor: pointer;
         filter: brightness(80%);
     }
+    .error-validation{
+        text-align: center;
+        color: var(--danger-color);
+    }
     `;
     render() {
-    return html`
-    <div>
-        <label>Recipient:</label>
-        <input 
-            type="text" 
-            placeholder="address..."
-            value="${this.recipientAddress}"
-            @change="${(e) => {this.recipientAddress = e.target.value}}"
-        >
-        <label>Ether:</label>
-        <input 
-            type="text" 
-            placeholder="amount..."
-            value="${this.ether}"
-            @change="${(e) => {this.ether = e.target.value}}"
-        >
-    </div>
-    <div>
-        <label>Transaction Fee:</label>
-        <input 
-            type="number" 
-            placeholder="gas price" 
-            value="${this.gasPrice}" 
-            @change="${(e) => {this.gasPrice = e.target.value}}"
-        >
-        <input 
-            type="number" 
-            placeholder="gas limit" 
-            value="${this.gasLimit}" 
-            @change="${(e) => {this.gasLimit = e.target.value}}"
-        >
-        <button @click="${this._sendTransaction}">send</button>
-    </div>`;
+        return html`
+        <div>
+            <label>Recipient:</label>
+            <input 
+                type="text" 
+                placeholder="address..."
+                value="${this.recipientAddress}"
+                @change="${(e) => {this.recipientAddress = e.target.value}}"
+            >
+            <label>Ether:</label>
+            <input 
+                type="text" 
+                placeholder="amount..."
+                value="${this.ether}"
+                @change="${(e) => {this.ether = e.target.value}}"
+            >
+        </div>
+        <div>
+            <label>Transaction Fee:</label>
+            <input 
+                type="number" 
+                placeholder="gas price" 
+                value="${this.gasPrice}" 
+                @change="${(e) => {this.gasPrice = e.target.value}}"
+            >
+            <input 
+                type="number" 
+                placeholder="gas limit" 
+                value="${this.gasLimit}" 
+                @change="${(e) => {this.gasLimit = e.target.value}}"
+            >
+            <button @click="${this._sendTransaction}">send</button>
+        </div>
+        ${ this.invalid 
+            ?  html`<div class="error-validation">Please enter a valid address</div>`
+            : html``
+        }`;
     }
 
     private async _sendTransaction(){
 
+        if(!this.recipientAddress) {
+            this.invalid = true
+            return
+        }
+
         const params = [{
-            "from": "0x2e0299Fcf9cFDfb2Ff9dc90ED0853683f620d7fE",
+            "from": window.ethereum.selectedAddress,
             "to": this.recipientAddress,
             "gas": "0x" + this.gasLimit.toString(16), 
             "gasPrice": "0x" + this.gasPrice.toString(16),
