@@ -21,7 +21,6 @@ export class DepositSection extends LitElement {
     :host{
         width: 80%;
         padding: var(--spacer) 0;
-        overflow: hidden;
         display: flex;
         align-items: center;
     }
@@ -83,11 +82,11 @@ export class DepositSection extends LitElement {
     }
 
     integerToWei(ether: number){
-        return ether * 10**18;
+        return new BigNumber(ether * 10**18).toNumber();
     }
 
     integerToGWei(ether: number){
-        return ether * 10**9;
+        return new BigNumber(ether * 10**9).toNumber();
     }
 
     toHex(integer: number){
