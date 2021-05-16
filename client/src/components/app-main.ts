@@ -4,8 +4,6 @@ import Web3 from 'web3'
 
 // declaration as any to work with window.ethereum in typescript
 declare let window: any; 
-declare let web3: Web3;
-declare let Integer: any;
 @customElement('app-main')
 export class AppMain extends LitElement {
   
@@ -15,6 +13,8 @@ export class AppMain extends LitElement {
   private _balance: any;
   @state()
   private _depositSectionIsVisible = false;
+  @state()
+  private _withdrawSectionIsVisible = false;
 
   connectedCallback(){
     super.connectedCallback();   
@@ -88,11 +88,7 @@ export class AppMain extends LitElement {
         <div>
           <account-info address="${this._walletAddress}"></account-info>
           <div id="transaction-buttons">
-            <button title="withdraw">
-              <a 
-                href="https://faucet.kovan.network/"
-                target="_blank"
-              >
+            <button title="withdraw" @click="${this._toggleWithdrawSectionVisibility}">
                 <span class="material-icons">
                   vertical_align_top
                 </span>
@@ -106,6 +102,7 @@ export class AppMain extends LitElement {
           </div>
         </div>
         ${this._getDepositSection()}
+        ${this._getWithdrawSection()}
         <div id="balance">
           <token-balance
             tokenName="Ether"
@@ -122,17 +119,31 @@ export class AppMain extends LitElement {
     }
 
     private _toggleDepositSectionVisibility(){
+      if(this._withdrawSectionIsVisible) this._withdrawSectionIsVisible = false
       this._depositSectionIsVisible = !this._depositSectionIsVisible;
     }
-
+    private _toggleWithdrawSectionVisibility(){
+      if(this._depositSectionIsVisible) this._depositSectionIsVisible = false
+      this._withdrawSectionIsVisible = !this._withdrawSectionIsVisible;
+    }
     private _getDepositSection(){
       let renderValue;
 
       this._depositSectionIsVisible 
-        ? renderValue = html`<deposit-section></-section>`
+        ? renderValue = html`<transaction-section transactionKind="deposit"></transaction-section>`
         : renderValue = html``
       return renderValue
     }
+
+    private _getWithdrawSection(){
+      let renderValue;
+
+      this._withdrawSectionIsVisible 
+        ? renderValue = html`<transaction-section transactionKind="withdraw"></transaction-section>`
+        : renderValue = html``
+      return renderValue
+    }
+
 
     private async _getBalance(){
 
