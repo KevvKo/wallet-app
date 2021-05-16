@@ -75,7 +75,7 @@ export class DepositSection extends LitElement {
             value="${this.gasLimit}" 
             @change="${(e) => {this.gasLimit = e.target.value}}"
         >
-        <button @click="${this._deposit}">send</button>
+        <button @click="${this._deposit}">deposit</button>
         ${ this.invalid 
             ?  html`<div class="error-validation">Please enter a valid address</div>`
             : html``

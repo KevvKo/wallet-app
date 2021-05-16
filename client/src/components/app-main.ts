@@ -88,19 +88,19 @@ export class AppMain extends LitElement {
         <div>
           <account-info address="${this._walletAddress}"></account-info>
           <div id="transaction-buttons">
-            <button>
+            <button title="withdraw">
               <a 
                 href="https://faucet.kovan.network/"
                 target="_blank"
               >
                 <span class="material-icons">
-                  vertical_align_bottom
+                  vertical_align_top
                 </span>
               </a>
             </button>
-            <button @click="${this._toggleDepositSectionVisibility}">
+            <button title="deposit" @click="${this._toggleDepositSectionVisibility}">
               <span class="material-icons">
-                call_made
+                vertical_align_bottom
               </span>    
             </button>
           </div>
