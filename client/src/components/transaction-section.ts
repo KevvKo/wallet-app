@@ -12,7 +12,7 @@ export class TransactionSection extends LitElement {
     transactionKind: string;
 
     @state()
-    private _recipientAddress = '0x2e0299Fcf9cFDfb2Ff9dc90ED0853683f620d7fE'
+    private _mwalletAddress = '0xDE703c365b6fec50B09a9f915F7CDf0Ac4A86869'
     @state()
     ether = 0;
     @state()
@@ -114,7 +114,7 @@ export class TransactionSection extends LitElement {
 
     private async _transaction(){
 
-        if(!this._recipientAddress) {
+        if(!this._mwalletAddress) {
             this.invalid = true;
             return
         }
@@ -127,15 +127,14 @@ export class TransactionSection extends LitElement {
         this.transactionKind === 'withdraw'
         ? transactionMembers = {
             recipient: window.ethereum.selectedAddress,
-            sender: '0x2e0299Fcf9cFDfb2Ff9dc90ED0853683f620d7fE'
+            sender: this._mwalletAddress
         }
         :   
         transactionMembers = {
-            recipient: '0x2e0299Fcf9cFDfb2Ff9dc90ED0853683f620d7fE',
+            recipient: this._mwalletAddress,
             sender: window.ethereum.selectedAddress
         }
         
-        console.log(transactionMembers)
         const params = [{
             "from": transactionMembers.sender,
             "to": transactionMembers.recipient,

@@ -8,7 +8,7 @@ declare let window: any;
 export class AppMain extends LitElement {
   
   @state()
-  private _walletAddress = '0x2e0299Fcf9cFDfb2Ff9dc90ED0853683f620d7fE';
+  private _walletAddress = '0xDE703c365b6fec50B09a9f915F7CDf0Ac4A86869';
   @state()
   private _balance: any;
   @state()
