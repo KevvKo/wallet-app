@@ -1,10 +1,13 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, state, property } from 'lit/decorators.js';
 import transactionMembers from './interfaces//transaction-members'
-import BigNumber from 'bignumber.js'
+import BigNumber from 'bignumber.js';
+import Web3 from 'web3'
+import contract from '../../../build/contracts/MWallet.json';
 
 declare let window: any; 
-
+declare let web3: Web3;
+declare let mwallet: any;
 @customElement('transaction-section')
 export class TransactionSection extends LitElement {
     
@@ -63,6 +66,9 @@ export class TransactionSection extends LitElement {
     connectedCallback(){
         super.connectedCallback();   
         this._initializeTransactionKind();
+        web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
+        const abi = contract.abi
+        mwallet = new web3.eth.Contract(abi, this._mwalletAddress );
     }
     render() {
         return html`
@@ -118,7 +124,7 @@ export class TransactionSection extends LitElement {
             this.invalid = true;
             return
         }
-
+        console.log(contract.abi)
         const value    = this.getQuantity(this.integerToWei(this.ether));
         const gasPrice = this.getQuantity(this.integerToGWei(this.gasPrice));
         const gasLimit = this.getQuantity(this.gasLimit);

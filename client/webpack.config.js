@@ -8,6 +8,14 @@ module.exports = {
     entry: {
       main: "./src/main.ts"
     },
+    resolve: {
+      extensions: ['.cson']
+    },
+    module: {
+      loaders: [
+        { test: /\.cson$/, loader: "cson" }
+      ]
+    },
     output: {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
@@ -20,6 +28,11 @@ module.exports = {
           test: /\.tsx?$/,
           use: 'ts-loader',
           exclude: /node_modules/,
+        },
+        {
+          test: /config\.json$/,
+          loader: 'special-loader',
+          type: 'javascript/auto',
         },
         {
           test: /\.css$/i,
