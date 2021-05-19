@@ -26,6 +26,10 @@ export class TransactionSection extends LitElement {
     invalid = false;
     @state()
     title: string;
+    @state()
+    private _confirmed: false;
+    @state()
+    transactionHash: string;
 
     static styles = css`
     :host{
@@ -60,6 +64,13 @@ export class TransactionSection extends LitElement {
     .error-validation{
         text-align: center;
         color: var(--danger-color);
+    }
+    .transaction-confirmation{
+        text-align: center;
+        color: var(--success-color);
+    }
+    a{
+        color: var(--success-color);
     }
     `;
 
@@ -97,7 +108,15 @@ export class TransactionSection extends LitElement {
         ${ this.invalid 
             ?  html`<div class="error-validation">Please enter a valid address</div>`
             : html``
-        }`;
+        }
+        ${ this._confirmed
+            ? html`
+                <div class="transaction-confirmation">Transaction confirmed:
+                    <a href="https://kovan.etherscan.io/tx/${this.transactionHash}">${this.transactionHash}</a> 
+                </div>`
+            : html`` 
+        }
+        `;
     }
 
     integerToWei(ether: number){
@@ -128,7 +147,7 @@ export class TransactionSection extends LitElement {
         const gasPrice = this.getQuantity(this.integerToGWei(this.gasPrice));
 
         this.transactionKind === 'withdraw'
-        ?   this._withdraw(value, gasLimit)
+        ? this._withdraw(value, gasLimit)
         : this._deposit(value, gasPrice, gasLimit);
     }
 
@@ -162,12 +181,11 @@ export class TransactionSection extends LitElement {
         }
 
         mwallet.methods.send( address, value).send({from: address, gas: estimatedGas})
-        .then((result) => {
-            console.log(result.transactionHash)
-        }).
-        catch((error) => {
-            console.log("Transaction failed: " + error)
+        .on('receipt', receipt => {
+            this._confirmed = true;
+            this.transactionHash = receipt.transactionHash;    
         })
+        .on('error', error => console.log('Transaction failed: ' + error))
     }
 
     private _initializeTransactionKind(){
