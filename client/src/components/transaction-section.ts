@@ -2,7 +2,6 @@
 
 import { LitElement, html, css } from 'lit';
 import { customElement, state, property } from 'lit/decorators.js';
-import transactionMembers from './interfaces//transaction-members'
 import BigNumber from 'bignumber.js';
 import Web3 from 'web3'
 import contract from '../../../build/contracts/MWallet.json';
@@ -173,7 +172,7 @@ export class TransactionSection extends LitElement {
 
     private _initializeTransactionKind(){
         this.transactionKind === "withdraw"
-        ? this.title = "Deposit"
-        : this.title = "Withdraw"
+        ? this.title = "Withdraw"
+        : this.title = "Deposit"
     }
 }
