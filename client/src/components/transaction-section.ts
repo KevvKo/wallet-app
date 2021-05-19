@@ -130,16 +130,11 @@ export class TransactionSection extends LitElement {
         let transactionMembers: transactionMembers;
 
         this.transactionKind === 'withdraw'
-        ? transactionMembers = {
-            recipient: window.ethereum.selectedAddress,
-            sender: this._mwalletAddress
-        }
-        :   
-        transactionMembers = {
-            recipient: this._mwalletAddress,
-            sender: window.ethereum.selectedAddress
-        }
-        
+        ?   this._withdraw()
+        : this._deposit()
+    }
+
+    private _deposit(){
         const params = [{
             "from": transactionMembers.sender,
             "to": transactionMembers.recipient,
@@ -148,32 +143,24 @@ export class TransactionSection extends LitElement {
             "value": value 
         }]      
 
-        if(this.transactionKind === 'withdraw'){
-            const abi = contract.abi
-            const mwallet = new web3.eth.Contract(abi, this._mwalletAddress);
-            console.log(await mwallet.methods.send("0x3868E57fbd4a5EF4459Bd2045028748F88641474", 1).estimateGas())
-            // const tx = {
-            //     "chainId": 42,
-            //     'from': transactionMembers.sender,
-            //     'to': transactionMembers.recipient,
-            //     'gas': 23070,
-            //     'data': mwallet.methods.send("0x3868E57fbd4a5EF4459Bd2045028748F88641474", 1).encodeABI()
-            // }
-            // const singPromise = web3.eth.accounts.signTransaction(tx, "01ef0549fba112012158a69e4317175ec56ecab4b4e8b435847e3680554232ee").then((signedTx) => {
+        window.ethereum.request({
+            method: 'eth_sendTransaction',
+            params
+        })
+    }
 
-            //     web3.eth.sendSignedTransaction(signedTx.rawTransaction, function (error, hash){
-            //         if(!error) { console.log(`Transaction-Hash ${hash}`) }
-            //         else {console.log(`Something went wrong to submit the transaction: ${error}`) }
-            //     })  
-            // })
+    private _withdraw(){
 
-            return
-        }
+        const address = window.ethereum.selectedAddress
+        const abi = contract.abi
+        const mwallet = new web3.eth.Contract(abi, this._mwalletAddress);
+        const estimatedGas = await mwallet.methods.send(address, 500000000).estimateGas({from: address})
 
-        // window.ethereum.request({
-        //     method: 'eth_sendTransaction',
-        //     params
-        // })
+        mwallet.methods.send( address, 500000000).send({from: address, gas: estimatedGas})
+        .then((hash) => {
+            console.log('Transaction hash: ' + hash)
+        })
+        return
     }
 
     private _initializeTransactionKind(){
