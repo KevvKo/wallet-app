@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { LitElement, html, css } from 'lit';
 import { customElement, state, property } from 'lit/decorators.js';
 import transactionMembers from './interfaces//transaction-members'
@@ -7,7 +9,6 @@ import contract from '../../../build/contracts/MWallet.json';
 
 declare let window: any; 
 declare let web3: Web3;
-declare let mwallet: any;
 @customElement('transaction-section')
 export class TransactionSection extends LitElement {
     
@@ -67,8 +68,6 @@ export class TransactionSection extends LitElement {
         super.connectedCallback();   
         this._initializeTransactionKind();
         web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
-        const abi = contract.abi
-        mwallet = new web3.eth.Contract(abi, this._mwalletAddress );
     }
     render() {
         return html`
@@ -124,7 +123,7 @@ export class TransactionSection extends LitElement {
             this.invalid = true;
             return
         }
-        console.log(contract.abi)
+
         const value    = this.getQuantity(this.integerToWei(this.ether));
         const gasPrice = this.getQuantity(this.integerToGWei(this.gasPrice));
         const gasLimit = this.getQuantity(this.gasLimit);
@@ -149,10 +148,32 @@ export class TransactionSection extends LitElement {
             "value": value 
         }]      
 
-        window.ethereum.request({
-            method: 'eth_sendTransaction',
-            params
-        })
+        if(this.transactionKind === 'withdraw'){
+            const abi = contract.abi
+            const mwallet = new web3.eth.Contract(abi, this._mwalletAddress);
+            console.log(await mwallet.methods.send("0x3868E57fbd4a5EF4459Bd2045028748F88641474", 1).estimateGas())
+            // const tx = {
+            //     "chainId": 42,
+            //     'from': transactionMembers.sender,
+            //     'to': transactionMembers.recipient,
+            //     'gas': 23070,
+            //     'data': mwallet.methods.send("0x3868E57fbd4a5EF4459Bd2045028748F88641474", 1).encodeABI()
+            // }
+            // const singPromise = web3.eth.accounts.signTransaction(tx, "01ef0549fba112012158a69e4317175ec56ecab4b4e8b435847e3680554232ee").then((signedTx) => {
+
+            //     web3.eth.sendSignedTransaction(signedTx.rawTransaction, function (error, hash){
+            //         if(!error) { console.log(`Transaction-Hash ${hash}`) }
+            //         else {console.log(`Something went wrong to submit the transaction: ${error}`) }
+            //     })  
+            // })
+
+            return
+        }
+
+        // window.ethereum.request({
+        //     method: 'eth_sendTransaction',
+        //     params
+        // })
     }
 
     private _initializeTransactionKind(){
