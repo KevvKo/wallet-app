@@ -125,21 +125,21 @@ export class TransactionSection extends LitElement {
         }
 
         const value    = this.getQuantity(this.integerToWei(this.ether));
-        const gasPrice = this.getQuantity(this.integerToGWei(this.gasPrice));
         const gasLimit = this.getQuantity(this.gasLimit);
-        let transactionMembers: transactionMembers;
+        const gasPrice = this.getQuantity(this.integerToGWei(this.gasPrice));
 
         this.transactionKind === 'withdraw'
-        ?   this._withdraw()
-        : this._deposit()
+        ?   this._withdraw(value, gasLimit)
+        : this._deposit(value, gasPrice, gasLimit);
     }
 
-    private _deposit(){
+    private async _deposit(value: number, gas: number, gasLimit: number){
+
         const params = [{
-            "from": transactionMembers.sender,
-            "to": transactionMembers.recipient,
+            "from": window.ethereum.selectedAddress,
+            "to": this._mwalletAddress,
             "gas": gasLimit, 
-            "gasPrice": gasPrice, 
+            "gasPrice": gas, 
             "value": value 
         }]      
 
@@ -149,18 +149,26 @@ export class TransactionSection extends LitElement {
         })
     }
 
-    private _withdraw(){
+    private async _withdraw(value: number, gasLimit: number){
 
         const address = window.ethereum.selectedAddress
         const abi = contract.abi
         const mwallet = new web3.eth.Contract(abi, this._mwalletAddress);
-        const estimatedGas = await mwallet.methods.send(address, 500000000).estimateGas({from: address})
+        const estimatedGas = await mwallet.methods.send(address, value).estimateGas({from: address})
 
-        mwallet.methods.send( address, 500000000).send({from: address, gas: estimatedGas})
-        .then((hash) => {
-            console.log('Transaction hash: ' + hash)
+        if(estimatedGas > gasLimit) {
+            console.log("Required gas exceeds gas limit!");
+            console.log("At least gas is necessary:" + estimatedGas)
+            return
+        }
+
+        mwallet.methods.send( address, value).send({from: address, gas: estimatedGas})
+        .then((result) => {
+            console.log(result.transactionHash)
+        }).
+        catch((error) => {
+            console.log("Transaction failed: " + error)
         })
-        return
     }
 
     private _initializeTransactionKind(){
