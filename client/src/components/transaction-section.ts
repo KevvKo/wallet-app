@@ -17,11 +17,11 @@ export class TransactionSection extends LitElement {
     @state()
     private _mwalletAddress = '0xDE703c365b6fec50B09a9f915F7CDf0Ac4A86869'
     @state()
-    ether = 0;
+    ether = new BigNumber(0);
     @state()
-    gasPrice = 3;
+    gasPrice = new BigNumber(3);
     @state()
-    gasLimit = 21000;
+    gasLimit = new BigNumber(21000);
     @state()
     invalid = false;
     @state()
@@ -143,6 +143,11 @@ export class TransactionSection extends LitElement {
             return
         }
 
+        if( this.ether * 1000000000000000000){
+            console.info("To small units. Please enter a valid ether amount!")
+            return
+        }
+
         const value    = this.getQuantity(this.integerToWei(this.ether));
         const gasLimit = this.getQuantity(this.gasLimit);
         const gasPrice = this.getQuantity(this.integerToGWei(this.gasPrice));
@@ -169,12 +174,10 @@ export class TransactionSection extends LitElement {
     }
 
     private async _withdraw(value: number, gasLimit: number){
-
         const address = window.ethereum.selectedAddress
         const abi = contract.abi
         const mwallet = new web3.eth.Contract(abi, this._mwalletAddress);
         const estimatedGas = await mwallet.methods.send(address, value).estimateGas({from: address})
-
         if(estimatedGas > gasLimit) {
             console.log("Required gas exceeds gas limit!");
             console.log("At least gas is necessary:" + estimatedGas)
@@ -187,7 +190,7 @@ export class TransactionSection extends LitElement {
             this.transactionHash = receipt.transactionHash;    
             setTimeout(() => {
                 this._confirmed = false;
-            }, '5000')
+            }, '7000')
         })
         .on('error', error => console.log('Transaction failed: ' + error))
     }
