@@ -27,9 +27,10 @@ export class TransactionSection extends LitElement {
     @state()
     title: string;
     @state()
-    private _confirmed: false;
+    private _confirmed = false;
     @state()
     transactionHash: string;
+
 
     static styles = css`
     :host{
@@ -184,6 +185,9 @@ export class TransactionSection extends LitElement {
         .on('receipt', receipt => {
             this._confirmed = true;
             this.transactionHash = receipt.transactionHash;    
+            setTimeout(() => {
+                this._confirmed = false;
+            }, '5000')
         })
         .on('error', error => console.log('Transaction failed: ' + error))
     }
