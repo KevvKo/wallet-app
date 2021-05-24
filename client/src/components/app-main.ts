@@ -1,6 +1,5 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import Web3 from 'web3'
 
 // declaration as any to work with window.ethereum in typescript
 declare let window: any; 
@@ -152,12 +151,14 @@ export class AppMain extends LitElement {
         'latest'
       ]
 
-     const response = await window.ethereum.request({ 
-        method: 'eth_getBalance',
-        params: params
-      })
-      const wei = await this._encodeQuantityToEther(response);
-      return wei/1000000000000000000;      
+      if(window.ethereum){
+        const response = await window.ethereum.request({ 
+          method: 'eth_getBalance',
+          params: params
+        })
+        const wei = await this._encodeQuantityToEther(response);
+        return wei/1000000000000000000;  
+      }    
     }
 
     private _checkForEthereum(){
